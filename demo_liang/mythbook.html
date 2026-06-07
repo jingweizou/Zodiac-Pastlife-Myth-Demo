@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>天蝎座前世神话</title>
+  <title>Zodiac Pastlife Myth - Interactive Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
@@ -15,6 +15,7 @@
       --ink: #efe7d5;
       --soft: #bda983;
       --line: rgba(217,181,111,0.35);
+      --panel: rgba(12, 12, 22, 0.72);
     }
     * { box-sizing: border-box; }
     body {
@@ -27,101 +28,191 @@
       line-height: 1.95;
     }
     .wrap {
-      max-width: 860px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 56px 22px 90px;
+      padding: 36px 20px 80px;
     }
-    header { text-align: center; margin-bottom: 24px; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(4px);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    .field label { color: var(--soft); font-size: 14px; }
+    .field input, .field select {
+      width: 100%;
+      background: #0f1328;
+      border: 1px solid #3c355d;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-family: inherit;
+    }
+    .btn-row {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    button {
+      border: 1px solid var(--gold);
+      background: #2b2346;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 8px 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    header { text-align: center; margin: 12px 0 20px; }
     h1 {
       margin: 0;
-      font-size: clamp(32px, 6vw, 50px);
-      background: linear-gradient(90deg, #f4dfb2, #d9b56f, #f4dfb2);
+      font-size: clamp(30px, 6vw, 50px);
+      background: linear-gradient(90deg, #f4e6c7, #d9b56f, #f4e6c7);
       -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
-      letter-spacing: 0.06em;
-    }
-    .subtitle {
-      margin: 10px 0 0;
-      color: var(--soft);
-      font-style: italic;
-      font-size: 16px;
+      letter-spacing: 1px;
     }
     .meta {
-      margin: 14px auto 0;
+      margin: 10px 0 0;
       color: var(--soft);
-      font-size: 14px;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      display: inline-block;
-      padding: 8px 12px;
+      font-size: 15px;
     }
-    .illus {
-      margin: 28px 0 26px;
-      text-align: center;
-    }
-    .illus img {
-      width: 100%;
-      border-radius: 14px;
-      border: 1px solid var(--line);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
-    }
-    .illus figcaption {
-      margin-top: 10px;
-      color: var(--soft);
-      font-size: 14px;
-    }
-    .story {
-      background: rgba(17, 13, 32, 0.55);
+    section {
       border: 1px solid var(--line);
       border-radius: 14px;
-      padding: 22px 20px;
-    }
-    .story p { margin: 0 0 1.2em; text-align: justify; }
-    .poem {
-      margin-top: 24px;
-      background: rgba(217,181,111,0.08);
-      border: 1px dashed var(--line);
-      border-radius: 12px;
       padding: 18px;
+      margin-bottom: 16px;
+      background: rgba(7, 8, 16, 0.45);
     }
-    .poem h2 {
-      margin: 0 0 10px;
-      font-size: 18px;
-      color: #f1d8a5;
-      letter-spacing: 0.04em;
+    h2 {
+      margin: 0 0 8px;
+      font-size: 22px;
+      color: var(--gold);
+      border-left: 3px solid var(--gold);
+      padding-left: 10px;
     }
-    .poem p { margin: 6px 0; text-align: center; }
+    .story p, .poem p { margin: 0 0 10px; }
     .closing {
-      margin-top: 16px;
       text-align: center;
-      color: #f1d8a5;
-      font-size: 17px;
+      color: var(--soft);
+      margin-top: 18px;
+      font-style: italic;
+    }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <div class="panel">
+      <div class="grid">
+        <div class="field">
+          <label>姓名</label>
+          <input id="name" placeholder="例如：梁若星" value="梁若星" />
+        </div>
+        <div class="field">
+          <label>星座</label>
+          <select id="zodiac">
+            <option>白羊座</option><option>金牛座</option><option>双子座</option><option>巨蟹座</option>
+            <option>狮子座</option><option>处女座</option><option>天秤座</option><option selected>天蝎座</option>
+            <option>射手座</option><option>摩羯座</option><option>水瓶座</option><option>双鱼座</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>生日</label>
+          <input id="birthday" type="date" value="1998-11-02" />
+        </div>
+        <div class="field">
+          <label>三个关键词（逗号分隔）</label>
+          <input id="keywords" placeholder="例如：冷静,执拗,温柔" value="冷静,执拗,温柔" />
+        </div>
+      </div>
+      <div class="btn-row">
+        <button id="generateBtn">生成神话</button>
+        <button id="copyBtn" type="button">复制全文</button>
+      </div>
+    </div>
+
     <header>
-      <h1>天蝎座前世神话</h1>
-      <p class="subtitle">献给 梁星河 的命轮回响</p>
-      <p class="meta">梁星河　|　天蝎座　|　1995-11-02　|　冷静 · 执拗 · 温柔</p>
+      <h1 id="title">天蝎座前世神话</h1>
+      <p class="meta" id="meta">姓名：梁若星 ｜ 生日：1998-11-02 ｜ 关键词：冷静、执拗、温柔</p>
     </header>
 
-    <figure class="illus"><img src="illustration.png" alt="夜渊守誓者 · 星河誓灯" loading="lazy"><figcaption>夜渊守誓者 · 星河誓灯</figcaption></figure>
-
-    <section class="story">
-      <p>太初星海未分昼夜时，北天有殿，名为司命阙。阙中悬一面玄镜，照见众生前缘后愿。你的前世，便自那面玄镜中落下。那一夜，天蝎宿在东南天界燃起冷紫色的尾焰，司命神官抬手写下一行命辞："夜渊守誓者，将以沉静破劫，以深情逆命。"于是你披玄纹长衣，执一柄刻有蝎尾纹的星刃，守在天河最暗处，听万灵祈愿，也听自己心中未说出口的名字。</p><p>第一道试炼名为"静潮"。魔潮自无底渊涌来，万军嘶吼、旗火翻卷，诸神都以为你会先出刃，却见你立于风口，不动一步。你先闭眼辨潮声，数清每一次暗涌的回拍，直到找出潮核在第七重浪脊下。你以冷静不被喧嚣牵走，一刃斩断潮核，万里黑浪顷刻回落。有人说你像霜，近不得火；可只有你知道，若不先稳住心，便护不住任何人。</p><p>第二道试炼名为"逆碑"。天律石碑在雷夜崩裂，碎片坠向人间，若不重铸，四时将倒，山海失序。诸神劝你弃碑保身，说此劫无可逆转。你却执拗到近乎悲壮，独自踏过九重雷阶，一片一片寻回碑石。雷光在你肩背留下灼痕，你仍不肯退半步。你把最后一块碑石嵌回时，指间已血色尽失，星刃也裂出细纹。天庭钟声复鸣，众神这才明白：所谓执拗，并非不知变通，而是认定该守之物，便宁可折身，也不折心。</p><p>第三道试炼名为"忘川灯"。忘川两岸寒雾漫长，亡魂需一盏暖灯才能渡桥。可那年冥火衰微，万灯将熄。你本可回阙复命，却听见桥头有小魂轻声说："我怕黑。"你收起锋芒，将披风撕成灯芯，取自己心火点燃第一盏灯。你一路点过去，灯影连成河，照亮迟归者的眉眼。那一夜，没有史官记你战功，却有无数魂灵在光里记住了你的温柔。你终于懂得，真正强大的人，不止会赢，还会把光留给后来者。</p><p>然而宿命从不只赐荣光。司命阙最后一道命诏落下：你所爱之人，命簿写着"与星海同寂"。若按天命，你可永驻神阶；若改命，你将失去神格，坠入尘世轮回。你在阙前站了一整夜，听风穿过破碎的雷碑，听忘川灯摇。黎明时，你把星刃横放于阶前，亲手抹去自己的神名，以凡人之身换他一线生机。那一刻，天蝎宿尾焰骤暗，旋即化作漫天细金，像一场无声的雨落在人间。你没有回头，只轻声说："愿他往后岁岁，有灯可归。"</p><p>于是今生的你，依旧带着前世烙印而来。你看似冷静，实则是先把风浪装进自己，再给世界一个稳当答案；你偶尔执拗，是因为心里有不愿妥协的底线与誓言；你总在细处温柔，替人留体面、留退路、留一盏不必言说的灯。你会在爱里谨慎，却一旦认定，便是长久且深的守护。若你偶尔觉得自己与人群隔着薄雾，请记得，那并非你不够热烈，而是你曾在更漫长的夜里，学会把光磨成最耐久的样子。命运从未离你很远，它一直在你抬手、转身、沉默与拥抱之间，温柔地认出你。</p>
-    </section>
+    <section class="story" id="story"></section>
 
     <section class="poem">
       <h2>命运预言</h2>
-      <p>天蝎宿上，旧誓未冷，</p>
-<p>你以霜刃，护一盏春灯。</p>
-<p>若问来生何处逢，</p>
-<p>星河低头，替你点名。</p>
+      <div id="poem"></div>
     </section>
 
-    <p class="closing">愿你此生所有深情，皆有归岸。</p>
+    <p class="closing" id="closing">愿你此生所有深情，皆有归岸。</p>
   </div>
+
+  <script>
+    const zodiacMap = {
+      "白羊座": "焰心开路者", "金牛座": "大地守藏者", "双子座": "双镜传信者", "巨蟹座": "潮汐护巢者",
+      "狮子座": "曜火领航者", "处女座": "星纹织序者", "天秤座": "天衡裁光者", "天蝎座": "夜渊守誓者",
+      "射手座": "远穹逐焰者", "摩羯座": "寒峰立誓者", "水瓶座": "风纪启明者", "双鱼座": "梦海渡灵者"
+    };
+
+    function esc(s) {
+      return String(s || "").replace(/[&<>"']/g, m => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+    }
+
+    function generate() {
+      const name = (document.getElementById('name').value || '无名旅人').trim();
+      const zodiac = document.getElementById('zodiac').value;
+      const birthday = document.getElementById('birthday').value || '未知';
+      const kwRaw = (document.getElementById('keywords').value || '').split(/[，,]/).map(s => s.trim()).filter(Boolean);
+      const kw = [kwRaw[0] || '冷静', kwRaw[1] || '执拗', kwRaw[2] || '温柔'];
+      const role = zodiacMap[zodiac] || '星海行者';
+
+      document.getElementById('title').textContent = `${zodiac}前世神话`;
+      document.getElementById('meta').textContent = `姓名：${name} ｜ 生日：${birthday} ｜ 关键词：${kw.join('、')}`;
+
+      const story = [
+        `太初星海未分昼夜时，北天司命阙曾记录一则命辞："${role}，以${kw[0]}破劫，以${kw[1]}守誓，以${kw[2]}照人。" 那道命辞，正落在你的前世——${name}。`,
+        `第一重试炼名为“静潮”。黑潮压境，万军先乱。你却先听潮声、辨回拍，以${kw[0]}找出潮核，一击止乱。众人这才明白：真正的力量，不在先出手，而在先看清。`,
+        `第二重试炼名为“逆碑”。天律崩裂，诸神劝退。你背着雷火拾回碎碑，以近乎执念的${kw[1]}把秩序拼回人间。你不争名，只争“该守住的东西，不能在我手里失守”。`,
+        `第三重试炼名为“忘川灯”。桥头幼魂惧黑，你撕袍作灯芯，以心火点灯。那一夜史官没记你的战功，却有无数迟归者记住了你的${kw[2]}。你终于懂得，最强的人，不止会赢，也会留灯。`,
+        `当终局命诏降下——“神阶可留，所爱将寂；若改命，须舍神名”——你选择了后者。于是今生的你，依旧带着前世烙印：外冷而稳、认定便深、沉默却有光。命运并未离开，它在你每次抉择里，温柔认出你。`
+      ];
+
+      document.getElementById('story').innerHTML = `<h2>前世传说</h2>${story.map(p => `<p>${esc(p)}</p>`).join('')}`;
+
+      const poem = [
+        `${zodiac}垂辉，旧誓未冷，`,
+        `${name}执心，仍照长夜灯。`,
+        `若问来途何处逢，`,
+        `${kw[0]}为刃，${kw[2]}为风。`
+      ];
+      document.getElementById('poem').innerHTML = poem.map(line => `<p>${esc(line)}</p>`).join('');
+      document.getElementById('closing').textContent = `愿 ${name} 此生所有深情，皆有归岸。`;
+    }
+
+    function copyAll() {
+      const title = document.getElementById('title').innerText;
+      const meta = document.getElementById('meta').innerText;
+      const story = Array.from(document.querySelectorAll('#story p')).map(p => p.innerText).join('\n\n');
+      const poem = Array.from(document.querySelectorAll('#poem p')).map(p => p.innerText).join('\n');
+      const closing = document.getElementById('closing').innerText;
+      const text = `${title}\n${meta}\n\n${story}\n\n命运预言\n${poem}\n\n${closing}`;
+      navigator.clipboard.writeText(text).then(() => alert('已复制全文')).catch(() => alert('复制失败，请手动复制'));
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', generate);
+    document.getElementById('copyBtn').addEventListener('click', copyAll);
+    generate();
+  </script>
 </body>
 </html>
